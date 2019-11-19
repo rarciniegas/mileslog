@@ -1,0 +1,49 @@
+Create folder for the app
+
+Download CodeIgniter and paste files into mileslog folder
+
+Changes to application/config/config.php  
+	$config['base_url'] = 'http://localhost/ciblog'; 
+	$config['index_page'] = ''; 
+
+Create mileslog/.htaccess 
+	RewriteEngine on 
+	RewriteCond $1 !^(index\.php|assets|images|js|css|uploads|favicon.png) 
+	RewriteCond %(REQUEST_FILENAME) !-f 
+	RewriteCond %(REQUEST_FILENAME) !-d 
+	RewriteRule ^(.*)$ ./index.php/$1 [L] 
+
+Create controllers/Pages.php 
+	<?php 
+	  class Pages extends CI_Controller{ 
+	    public function view($page = 'home'){ 
+	      if(!file_exists(APPPATH.'views/pages/'.$page.'.php')){ 
+	        show_404(); 
+	      } 
+	      $data['title'] = ucfirst($page); 
+	      $this->load->view('templates/header'); 
+	      $this->load->view('pages/'.$page, $data); 
+	      $this->load->view('templates/footer'); 
+	    } 
+	  } 
+
+Create mileslog/application/templates folder
+
+Create header.php in views/templates 
+	<!DOCTYPE html> 
+		<html> 
+			<head> 
+				<title>Miles Log</title> 
+			</head> 
+			<body> 
+ 
+Create footer.php in views/templates 
+ 
+		</html> 
+	</body> 
+ 
+Change config/routes.php 
+	$route['(:any)'] = 'pages/view/$1'; 
+ 
+Change application/config/autoload.php 
+	$autoload['helper'] = array('url'); 
