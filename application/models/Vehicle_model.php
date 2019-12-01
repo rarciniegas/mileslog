@@ -76,4 +76,11 @@
 			return $query->result_array();
 		}
 
+		public function get_fuelup_date_range($from, $to){
+			$this->db->where('fueled_at >=', $from);
+			$this->db->where('fueled_at <=', $to);
+			$query = $this->db->get('fuel');
+			return $query->result_array();
+		}
+
 	}

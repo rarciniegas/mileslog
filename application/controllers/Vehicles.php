@@ -153,4 +153,23 @@
 			$this->load->view('templates/footer');
 		}
 
+		public function get_mpg_dates(){
+			$data['title'] = 'Get date range';
+			$this->form_validation->set_rules('from', 'From', 'required|date');
+      $this->form_validation->set_rules('to', 'To', 'required|date');
+			if($this->form_validation->run() === FALSE){
+				$this->load->view('templates/header');
+				$this->load->view('vehicles/get_dates', $data);
+				$this->load->view('templates/footer');
+			} else {
+				$data['title'] = 'Fuel up information';
+				$from = $this->input->post('from');
+				$to = $this->input->post('to');
+				$data['fuelups'] = $this->vehicle_model->get_fuelup_date_range($from, $to);
+				$this->load->view('templates/header');
+				$this->load->view('vehicles/fuelup_history', $data);
+				$this->load->view('templates/footer');
+			}
+		}
+
 	}

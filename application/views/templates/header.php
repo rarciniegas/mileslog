@@ -45,7 +45,7 @@
           <a class="nav-link dropdown-toggle" href="#" id="Stats" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Stats</a>
 
           <div class="dropdown-menu" aria-labelledby="Stats">
-            <a class="dropdown-item" href="<?php echo base_url(); ?>vehicles/fuelup_history">MPG</a>
+            <a class="dropdown-item" href="<?php echo base_url(); ?>vehicles/get_mpg_dates">MPG</a>
             <a class="dropdown-item" href="<?php echo base_url(); ?>vehicles/miles_driven">Miles</a>
             <a class="dropdown-item" href="<?php echo base_url(); ?>vehicles/gallon_price">Gallon price</a>
           </div>
