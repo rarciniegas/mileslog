@@ -1,6 +1,7 @@
 <?php echo validation_errors(); ?>
 
-<?php echo form_open('vehicles/get_mpg_dates'); ?>
+
+<?php echo form_open($form_name); ?>
 
 <div class="col-md-6 mx-auto">
       <div class="card card-body bg-light mt-5">

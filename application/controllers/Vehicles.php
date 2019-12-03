@@ -1,6 +1,6 @@
 <?php
 	class Vehicles extends CI_Controller{
-		// Register user
+		// Register vehicle
 		public function register(){
 			$data['title'] = 'Sign Up';
 			$this->form_validation->set_rules('vehicle_name', 'Vehicle_name', 'required');
@@ -18,7 +18,7 @@
 				redirect('home');
 			}
 		}
-		// Log in user
+		// Log in vehicle
 		public function login(){
 			$data['title'] = 'Sign In';
 			$this->form_validation->set_rules('vehicle_name', 'Vehicle_name', 'required');
@@ -53,7 +53,7 @@
 				}		
 			}
 		}
-		// Log user out
+		// Log vehicle out
 		public function logout(){
 			// Unset user data
 			$this->session->unset_userdata('logged_in');
@@ -146,11 +146,23 @@
 		}
 
 		public function gallon_price(){
-			$data['title'] = 'Gallon price';
-			$data['fuelups'] = $this->vehicle_model->get_fuelup_history();
-			$this->load->view('templates/header');
-			$this->load->view('vehicles/gallon_price', $data);
-			$this->load->view('templates/footer');
+			$data['title'] = 'Get date range';
+			$this->form_validation->set_rules('from', 'From', 'required|date');
+      $this->form_validation->set_rules('to', 'To', 'required|date');
+			if($this->form_validation->run() === FALSE){
+				$this->load->view('templates/header');
+				$data['form_name'] = 'vehicles/gallon_price';
+				$this->load->view('vehicles/get_dates', $data);
+				$this->load->view('templates/footer');
+			} else {
+				$data['title'] = 'Fuel up information';
+				$from = $this->input->post('from');
+				$to = $this->input->post('to');
+				$data['fuelups'] = $this->vehicle_model->get_fuelup_date_range($from, $to);
+				$this->load->view('templates/header');
+				$this->load->view('vehicles/gallon_price', $data);
+				$this->load->view('templates/footer');
+			}
 		}
 
 		public function get_mpg_dates(){
@@ -159,6 +171,7 @@
       $this->form_validation->set_rules('to', 'To', 'required|date');
 			if($this->form_validation->run() === FALSE){
 				$this->load->view('templates/header');
+				$data['form_name'] = 'vehicles/get_mpg_dates';
 				$this->load->view('vehicles/get_dates', $data);
 				$this->load->view('templates/footer');
 			} else {
@@ -169,6 +182,21 @@
 				$this->load->view('templates/header');
 				$this->load->view('vehicles/fuelup_history', $data);
 				$this->load->view('templates/footer');
+			}
+		}
+
+		public function get_dates(){
+			$data['title'] = 'Get date range';
+			$this->form_validation->set_rules('from', 'From', 'required|date');
+      $this->form_validation->set_rules('to', 'To', 'required|date');
+			if($this->form_validation->run() === FALSE){
+				$this->load->view('templates/header');
+				$this->load->view('vehicles/get_dates', $data);
+				$this->load->view('templates/footer');
+			} else {
+				$data['from'] = $from = $this->input->post('from');
+				$data['to'] = $to = $this->input->post('to');
+				return ;
 			}
 		}
 
