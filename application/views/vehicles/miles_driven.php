@@ -14,7 +14,11 @@
             </tr>
           </thead>
           <tbody>
-            <?php $prev_miles = 0;?>
+            <?php
+              $prev_miles = 0;
+              $total_miles = 0;
+              $total_days = 0;
+            ?>
           	<?php foreach($fuelups as $fuelup) : ?>
             <?php $current_time = strtotime($fuelup['fueled_at']);?>
 
@@ -22,11 +26,13 @@
               <td><?php echo $fuelup['fueled_at']; ?></a></td>
               <td><?php if ($prev_miles > 0): ?>
                 <?php $miles = ($fuelup['miles'] - $prev_miles); ?>
-                <?php echo number_format(($fuelup['miles'] - $prev_miles), 2); ?></a>
+                <?php $total_miles += $miles; ?>
+                <?php echo ($fuelup['miles'] - $prev_miles); ?></a>
               <?php endif ?>
               <td>
                 <?php if ($prev_miles > 0): ?>
                   <?php $days = (($current_time - $prev_time)/86400); ?>
+                  <?php $total_days += $days; ?>
                   <?php echo number_format((($current_time - $prev_time)/86400), 2); ?></a>
                 <?php endif ?>  
               </td>
@@ -39,7 +45,14 @@
               <?php $prev_miles = $fuelup['miles']; ?>
               <?php $prev_time = strtotime($fuelup['fueled_at']);?>
             </tr>
+
             <?php endforeach; ?>
+            <tr>
+              <td><b>Totals</b></td>
+              <td><?php echo $total_miles; ?></a></td>
+              <td><?php echo number_format($total_days,2); ?></a></td>
+              <td><?php echo number_format((($total_miles) / $total_days ), 2); ?></a></td>
+            </tr>
           </tbody>
         </table>
       </div>
