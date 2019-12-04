@@ -9,5 +9,11 @@ body {
 .jumbotron{
   background-image: url("../images/causeway.jpg");
   background-size: cover;
+  color: yellow;
+}
+.card-text {
+  color: white;
+}
+.card-title {
   color: white;
 }
